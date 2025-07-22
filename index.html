@@ -744,144 +744,157 @@
     </div>
 
     <script>
-        // High-pressure, problem-solving focused questions
+        // Complex scenarios where speed vs. accuracy create real trade-offs
         const questions = [
             {
-                text: "Your server crashes during a live client presentation to 100+ people. The client is getting frustrated and you have 2 minutes to fix it or lose the deal. You:",
+                text: "You need to choose a vendor for a $500K project. You have 2 hours before the deadline. You:",
                 answers: [
-                    { text: "Immediately restart the server and have a backup plan ready", speed: 25, accuracy: 20, resilience: 25, adaptability: 20 },
-                    { text: "Calmly explain the situation while quickly troubleshooting", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
-                    { text: "Panic and frantically try random solutions", speed: 10, accuracy: 5, resilience: 5, adaptability: 10 },
-                    { text: "Freeze up and apologize profusely", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                    { text: "Go with the vendor I've worked with before - I know they're reliable", speed: 25, accuracy: 15, resilience: 18, adaptability: 10 },
+                    { text: "Quickly compare the top 3 proposals on price and timeline", speed: 22, accuracy: 12, resilience: 15, adaptability: 15 },
+                    { text: "Spend time calling references for the most promising vendor", speed: 8, accuracy: 25, resilience: 20, adaptability: 18 },
+                    { text: "Ask for a 24-hour extension to properly evaluate all options", speed: 5, accuracy: 22, resilience: 15, adaptability: 20 }
                 ]
             },
             {
-                text: "You have 30 minutes to solve a complex math problem that determines if your team gets funding. Halfway through, you realize your approach is wrong. You:",
+                text: "Your team is debating two approaches to solve a critical bug. The meeting is running long. You:",
                 answers: [
-                    { text: "Immediately switch to a completely different method", speed: 20, accuracy: 15, resilience: 15, adaptability: 25 },
-                    { text: "Quickly review what went wrong and try a modified approach", speed: 15, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Keep pushing with the same method hoping it works", speed: 10, accuracy: 10, resilience: 10, adaptability: 5 },
-                    { text: "Feel overwhelmed and consider giving up", speed: 5, accuracy: 5, resilience: 5, adaptability: 10 }
+                    { text: "Call for a quick vote to decide and move forward", speed: 25, accuracy: 10, resilience: 15, adaptability: 12 },
+                    { text: "Suggest we try the simpler approach first since it's faster to implement", speed: 20, accuracy: 15, resilience: 18, adaptability: 18 },
+                    { text: "Insist we take time to properly analyze both approaches first", speed: 5, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Propose splitting into two groups to prototype both solutions", speed: 15, accuracy: 20, resilience: 22, adaptability: 25 }
                 ]
             },
             {
-                text: "Emergency: The building's fire alarm system malfunctioned and you're the only tech on-site with 200 people inside. You need to figure out if it's real or false within 60 seconds. You:",
+                text: "A client wants an answer to their pricing question immediately, but you need to check with legal first. You:",
                 answers: [
-                    { text: "Quickly check the fire panel, smell for smoke, and make a decisive call", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
-                    { text: "Check multiple indicators methodically and announce your findings", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
-                    { text: "Evacuate everyone immediately without investigating", speed: 20, accuracy: 10, resilience: 15, adaptability: 10 },
-                    { text: "Feel paralyzed by the responsibility and delay the decision", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                    { text: "Give them a ballpark estimate based on similar projects", speed: 25, accuracy: 10, resilience: 15, adaptability: 15 },
+                    { text: "Tell them I'll have an answer within the hour after checking internally", speed: 12, accuracy: 25, resilience: 20, adaptability: 18 },
+                    { text: "Explain that pricing is complex and schedule a call for tomorrow", speed: 8, accuracy: 22, resilience: 18, adaptability: 15 },
+                    { text: "Quickly conference in someone from legal to answer on the spot", speed: 20, accuracy: 18, resilience: 22, adaptability: 25 }
                 ]
             },
             {
-                text: "You're debugging code and have 5 minutes before the deadline. You've tried 3 approaches and nothing works. The bug is costing the company $1000/minute. You:",
+                text: "You discover a potential security vulnerability in your code 30 minutes before launch. You:",
                 answers: [
-                    { text: "Try a completely different debugging strategy immediately", speed: 20, accuracy: 15, resilience: 20, adaptability: 25 },
-                    { text: "Systematically check the most likely causes based on error messages", speed: 15, accuracy: 25, resilience: 15, adaptability: 15 },
-                    { text: "Randomly change code hoping something fixes it", speed: 15, accuracy: 5, resilience: 10, adaptability: 15 },
-                    { text: "Accept defeat and tell your boss you can't fix it", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                    { text: "Deploy as planned - it's probably not a real threat", speed: 25, accuracy: 5, resilience: 10, adaptability: 8 },
+                    { text: "Do a quick patch for the most obvious issue and deploy", speed: 22, accuracy: 12, resilience: 15, adaptability: 15 },
+                    { text: "Delay the launch until tomorrow to properly investigate and fix", speed: 5, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Deploy with monitoring in place and fix immediately if issues arise", speed: 18, accuracy: 15, resilience: 20, adaptability: 22 }
                 ]
             },
             {
-                text: "During a live surgery, the power goes out. You have battery backup for 10 minutes max. The patient's life depends on you completing the procedure. You:",
+                text: "Your presentation to executives is in 10 minutes and you notice an error in your key financial projection. You:",
                 answers: [
-                    { text: "Immediately assess what's critical and work efficiently with backup power", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
-                    { text: "Quickly prioritize the most essential steps to save the patient", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Call for emergency backup while continuing carefully", speed: 15, accuracy: 20, resilience: 15, adaptability: 15 },
-                    { text: "Feel overwhelmed by the pressure and struggle to focus", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Present as-is and hope no one notices the error", speed: 25, accuracy: 5, resilience: 8, adaptability: 5 },
+                    { text: "Quickly recalculate and update just that one slide", speed: 20, accuracy: 15, resilience: 18, adaptability: 15 },
+                    { text: "Remove the slide entirely and adjust my presentation", speed: 15, accuracy: 18, resilience: 20, adaptability: 22 },
+                    { text: "Start by acknowledging the error and presenting the corrected data", speed: 10, accuracy: 25, resilience: 25, adaptability: 20 }
                 ]
             },
             {
-                text: "You're managing air traffic control when 3 planes simultaneously request emergency landing at your airport. You have 2 minutes to sequence them safely. You:",
+                text: "A journalist wants a quote about your company's new product launch. The PR team is unavailable. You:",
                 answers: [
-                    { text: "Quickly assess each emergency and prioritize by severity", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
-                    { text: "Methodically review each situation and create a safe landing sequence", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
-                    { text: "Go with your gut feeling about which plane needs to land first", speed: 20, accuracy: 15, resilience: 15, adaptability: 15 },
-                    { text: "Feel overwhelmed and struggle to make quick decisions", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Give them a quick statement based on what I know", speed: 25, accuracy: 10, resilience: 15, adaptability: 12 },
+                    { text: "Tell them I'll need to get back to them with an official statement", speed: 12, accuracy: 22, resilience: 18, adaptability: 15 },
+                    { text: "Refer them to our press kit and decline to comment personally", speed: 15, accuracy: 18, resilience: 20, adaptability: 10 },
+                    { text: "Get the PR team on the phone immediately before responding", speed: 8, accuracy: 25, resilience: 22, adaptability: 25 }
                 ]
             },
             {
-                text: "The stock market is crashing and you need to decide whether to sell your company's $10M position in the next 60 seconds. You:",
+                text: "You're reviewing a contract with a tight signing deadline, but some terms seem unclear. You:",
                 answers: [
-                    { text: "Quickly analyze the pattern and make a decisive trade", speed: 25, accuracy: 20, resilience: 25, adaptability: 20 },
-                    { text: "Check key indicators rapidly and execute based on data", speed: 20, accuracy: 25, resilience: 20, adaptability: 15 },
-                    { text: "Follow your predetermined stop-loss strategy", speed: 15, accuracy: 15, resilience: 15, adaptability: 10 },
-                    { text: "Freeze up and do nothing, hoping it recovers", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                    { text: "Sign it - we can clarify the details during implementation", speed: 25, accuracy: 8, resilience: 12, adaptability: 10 },
+                    { text: "Sign with a note requesting clarification on specific terms", speed: 20, accuracy: 15, resilience: 18, adaptability: 18 },
+                    { text: "Call the other party to clarify the unclear terms before signing", speed: 10, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Request a contract amendment with clearer language", speed: 5, accuracy: 22, resilience: 18, adaptability: 15 }
                 ]
             },
             {
-                text: "You're a pilot and both engines fail at 30,000 feet. You have minutes to find a solution before running out of altitude. You:",
+                text: "Your team needs to estimate project time for a proposal due today. The scope is somewhat unclear. You:",
                 answers: [
-                    { text: "Immediately run through emergency procedures while looking for landing options", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
-                    { text: "Systematically work through the checklist while staying calm", speed: 15, accuracy: 25, resilience: 25, adaptability: 15 },
-                    { text: "Try to restart engines while scanning for emergency landing sites", speed: 20, accuracy: 20, resilience: 20, adaptability: 20 },
-                    { text: "Feel panic setting in and struggle to think clearly", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Use our standard multiplier from similar projects", speed: 25, accuracy: 15, resilience: 18, adaptability: 12 },
+                    { text: "Add 20% buffer to my best guess and submit", speed: 22, accuracy: 12, resilience: 15, adaptability: 15 },
+                    { text: "Call the client to clarify scope before estimating", speed: 8, accuracy: 25, resilience: 20, adaptability: 22 },
+                    { text: "Submit a range estimate with assumptions clearly stated", speed: 15, accuracy: 22, resilience: 20, adaptability: 20 }
                 ]
             },
             {
-                text: "You're leading a rescue mission and your GPS fails in unfamiliar terrain. The victim has 30 minutes of oxygen left. You:",
+                text: "You're asked to recommend hiring someone, but you only had a brief interaction with them. You:",
                 answers: [
-                    { text: "Immediately use backup navigation methods and natural landmarks", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
-                    { text: "Quickly orient using sun position and terrain features", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Try to fix the GPS while moving toward the general area", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
-                    { text: "Feel lost and consider calling for backup navigation help", speed: 10, accuracy: 10, resilience: 10, adaptability: 10 }
+                    { text: "Give my impression based on our limited interaction", speed: 22, accuracy: 10, resilience: 15, adaptability: 12 },
+                    { text: "Recommend a more thorough evaluation process instead", speed: 8, accuracy: 25, resilience: 22, adaptability: 20 },
+                    { text: "Decline to give a recommendation due to limited data", speed: 15, accuracy: 20, resilience: 20, adaptability: 15 },
+                    { text: "Suggest involving others who know them better", speed: 12, accuracy: 22, resilience: 18, adaptability: 25 }
                 ]
             },
             {
-                text: "During a live TV broadcast, your teleprompter breaks and you have 30 seconds of dead air. 2 million people are watching. You:",
+                text: "A customer is demanding a refund for a product you're not sure they actually purchased. You:",
                 answers: [
-                    { text: "Immediately improvise and continue the broadcast smoothly", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
-                    { text: "Quickly transition to discussing a related topic you know well", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Acknowledge the technical difficulty and try to continue", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
-                    { text: "Freeze up and struggle to fill the dead air", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Give the refund to avoid escalation", speed: 25, accuracy: 8, resilience: 12, adaptability: 15 },
+                    { text: "Look up their purchase history before deciding", speed: 10, accuracy: 25, resilience: 20, adaptability: 18 },
+                    { text: "Ask them to provide proof of purchase", speed: 18, accuracy: 20, resilience: 18, adaptability: 15 },
+                    { text: "Escalate to a manager to make the call", speed: 15, accuracy: 18, resilience: 15, adaptability: 20 }
                 ]
             },
             {
-                text: "You're performing surgery and discover an unexpected complication that wasn't in the scans. You need to decide on a new approach immediately. You:",
+                text: "You need to fire someone but HR says the documentation isn't sufficient yet. Your team is suffering. You:",
                 answers: [
-                    { text: "Quickly assess options and adapt the surgical plan", speed: 20, accuracy: 25, resilience: 25, adaptability: 25 },
-                    { text: "Systematically evaluate the complication and choose the safest approach", speed: 15, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Proceed cautiously while considering alternatives", speed: 10, accuracy: 20, resilience: 15, adaptability: 15 },
-                    { text: "Feel uncertain and consider stopping the procedure", speed: 5, accuracy: 10, resilience: 10, adaptability: 10 }
+                    { text: "Fire them anyway - sometimes you have to act decisively", speed: 25, accuracy: 8, resilience: 15, adaptability: 10 },
+                    { text: "Work with HR to fast-track the documentation process", speed: 18, accuracy: 20, resilience: 22, adaptability: 25 },
+                    { text: "Wait for proper documentation while managing team morale", speed: 8, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Move the person to a different role temporarily", speed: 15, accuracy: 15, resilience: 18, adaptability: 22 }
                 ]
             },
             {
-                text: "Your company's main database is corrupted and customers can't access their accounts. Every minute costs $5000. You have no recent backup. You:",
+                text: "A potential investor wants your financial projections, but they're based on optimistic assumptions. You:",
                 answers: [
-                    { text: "Immediately start multiple recovery approaches simultaneously", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
-                    { text: "Quickly identify the corruption type and use the most appropriate recovery method", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Try the most common recovery solutions first", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
-                    { text: "Feel overwhelmed by the pressure and struggle to start", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Send them as-is - investors expect optimistic projections", speed: 25, accuracy: 10, resilience: 12, adaptability: 8 },
+                    { text: "Include a note explaining the assumptions behind the numbers", speed: 15, accuracy: 25, resilience: 22, adaptability: 20 },
+                    { text: "Create conservative and optimistic scenarios", speed: 8, accuracy: 22, resilience: 20, adaptability: 25 },
+                    { text: "Schedule a call to discuss the projections in context", speed: 10, accuracy: 20, resilience: 18, adaptability: 22 }
                 ]
             },
             {
-                text: "You're defusing a bomb and with 60 seconds left, you realize the wiring doesn't match the manual. You:",
+                text: "Your automated system flagged a transaction as potentially fraudulent, but the customer is insisting it's legitimate. You:",
                 answers: [
-                    { text: "Immediately trace the actual wiring pattern and adapt", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
-                    { text: "Quickly analyze the differences and apply logical deduction", speed: 20, accuracy: 25, resilience: 25, adaptability: 20 },
-                    { text: "Follow the pattern that seems most similar to the manual", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
-                    { text: "Feel panic and struggle to think clearly about the differences", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Override the system and approve the transaction", speed: 25, accuracy: 8, resilience: 12, adaptability: 15 },
+                    { text: "Ask for additional verification before processing", speed: 12, accuracy: 25, resilience: 20, adaptability: 18 },
+                    { text: "Escalate to the fraud prevention team", speed: 15, accuracy: 22, resilience: 18, adaptability: 20 },
+                    { text: "Temporarily hold the transaction while investigating", speed: 8, accuracy: 20, resilience: 22, adaptability: 22 }
                 ]
             },
             {
-                text: "During a rocket launch, multiple systems show warning lights simultaneously. You have 10 seconds to decide: abort or continue. You:",
+                text: "You're offered two job opportunities: one with a known company (good but not great), another with an exciting startup (higher risk/reward). Decision needed today. You:",
                 answers: [
-                    { text: "Instantly prioritize warnings by criticality and make the call", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
-                    { text: "Quickly assess which systems are most critical to mission safety", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Go with your gut feeling based on experience", speed: 20, accuracy: 15, resilience: 20, adaptability: 15 },
-                    { text: "Feel paralyzed by the complexity and delay the decision", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                    { text: "Take the safe option with the established company", speed: 20, accuracy: 15, resilience: 12, adaptability: 8 },
+                    { text: "Go with the startup - fortune favors the bold", speed: 25, accuracy: 10, resilience: 18, adaptability: 22 },
+                    { text: "Ask both for a few more days to decide", speed: 8, accuracy: 20, resilience: 15, adaptability: 18 },
+                    { text: "Negotiate with both to improve the offers before deciding", speed: 12, accuracy: 18, resilience: 22, adaptability: 25 }
                 ]
             },
             {
-                text: "You're a day trader and just lost $50K on a bad trade. The market is still moving against you. You have 30 seconds to decide your next move. You:",
+                text: "Your algorithm is producing biased results, but fixing it properly would delay your product launch by 3 months. You:",
                 answers: [
-                    { text: "Cut losses immediately and reassess with a clear head", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
-                    { text: "Quickly analyze if this is a temporary dip or real trend change", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
-                    { text: "Double down hoping to recover the losses quickly", speed: 20, accuracy: 5, resilience: 10, adaptability: 10 },
-                    { text: "Feel emotionally overwhelmed and make no decision", speed: 5, accuracy: 10, resilience: 5, adaptability: 5 }
+                    { text: "Launch as planned and fix the bias in the next version", speed: 25, accuracy: 8, resilience: 12, adaptability: 15 },
+                    { text: "Implement a quick bias correction and launch on time", speed: 22, accuracy: 12, resilience: 15, adaptability: 18 },
+                    { text: "Delay launch to properly address the bias issue", speed: 5, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Launch with clear disclaimers about current limitations", speed: 18, accuracy: 15, resilience: 20, adaptability: 22 }
                 ]
             }
         ];
+
+        // Shuffle answer order for each question to prevent position bias
+        function shuffleAnswers() {
+            questions.forEach(question => {
+                for (let i = question.answers.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [question.answers[i], question.answers[j]] = [question.answers[j], question.answers[i]];
+                }
+            });
+        }
+
+        // Call this once when the page loads
+        shuffleAnswers();
 
         // State management
         let currentQuestion = 0;
