@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence Under Pressure Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Quiz Styles */
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quiz-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            color: #1f2937;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .question-counter {
+            text-align: right;
+        }
+
+        .question-counter .label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .question-counter .numbers {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ef4444);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            width: 4%;
+        }
+
+        .pressure-alert {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .pressure-alert .icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .pressure-alert .text {
+            font-weight: 600;
+            color: #b91c1c;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1f2937;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .answers-container {
+            margin-bottom: 40px;
+        }
+
+        .answer-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .answer-btn:hover {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer-btn .radio {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            margin-right: 15px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .answer-btn:hover .radio {
+            border-color: #3b82f6;
+        }
+
+        .answer-btn:hover .radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+        }
+
+        .answer-btn .text {
+            font-weight: 500;
+            color: #374151;
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: #f3f4f6;
+            color: #6b7280;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #e5e7eb;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-hint {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Main View Styles */
+        .main-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fbbf24, #ef4444, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            color: #d1d5db;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #ef4444, #fbbf24);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .compass-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .compass-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .compass-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .compass-title h3 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        .compass-title p {
+            color: #6b7280;
+        }
+
+        .compass-svg {
+            width: 100%;
+            height: 600px;
+            cursor: pointer;
+            background-image:
+                linear-gradient(rgba(71, 85, 105, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(71, 85, 105, 0.2) 1px, transparent 1px);
+            background-size: 25px 25px;
+            border-radius: 10px;
+        }
+
+        .user-dot {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .user-dot:hover {
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h3 .emoji {
+            margin-right: 10px;
+        }
+
+        .overall-score {
+            text-align: center;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #78350f;
+            font-weight: bold;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .intelligence-level {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .percentile {
+            color: #6b7280;
+        }
+
+        .dimension {
+            margin-bottom: 25px;
+        }
+
+        .dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .dimension-label {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .dimension-score {
+            font-weight: bold;
+            color: #3b82f6;
+        }
+
+        .dimension-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .dimension-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .speed-fill {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
+        .accuracy-fill {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+
+        .resilience-fill {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .adaptability-fill {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .dimension-desc {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        .profile-description {
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .strengths-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+
+        .strength-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .strength-dot {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .strength-text {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .info-card {
+            background: #374151;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #4b5563;
+        }
+
+        .info-card h4 {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-card h4 .emoji {
+            margin-right: 10px;
+        }
+
+        .info-card p {
+            color: #d1d5db;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .quiz-card {
+                padding: 25px;
+            }
+
+            .quiz-title {
+                font-size: 2rem;
+            }
+
+            .compass-svg {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Quiz View -->
+        <div id="quiz-view" class="hidden">
+            <div class="quiz-container">
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <h2 class="quiz-title">Intelligence Under Pressure</h2>
+                        <div class="question-counter">
+                            <div class="label">Scenario</div>
+                            <div class="numbers">
+                                <span id="current-q">1</span> of <span id="total-q">25</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div id="progress-bar" class="progress-fill"></div>
+                    </div>
+
+                    <div class="pressure-alert">
+                        <span class="icon">⚡</span>
+                        <span class="text">HIGH PRESSURE SCENARIO</span>
+                    </div>
+
+                    <div class="question-text" id="question-text">
+                        <!-- Question will be inserted here -->
+                    </div>
+
+                    <div class="answers-container" id="answers-container">
+                        <!-- Answers will be inserted here -->
+                    </div>
+
+                    <div class="quiz-nav">
+                        <button id="back-btn" class="nav-btn" disabled>← Previous</button>
+                        <div class="quiz-hint">
+                            <div>Choose your most honest response</div>
+                            <div style="font-size: 0.8rem; margin-top: 3px;">This measures real problem-solving ability
+                            </div>
+                        </div>
+                        <button id="skip-btn" class="nav-btn">Skip →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Assessment View -->
+        <div id="compass-view">
+            <div class="main-header">
+                <h1 class="main-title">Intelligence Under Pressure</h1>
+                <p class="main-subtitle">
+                    True intelligence isn't just knowledge—it's the ability to solve problems quickly and accurately
+                    when it matters most.
+                    How do you perform when the pressure is on?
+                </p>
+                <button id="start-quiz-btn" class="start-btn">
+                    🧠 Measure Your Intelligence
+                </button>
+            </div>
+
+            <div class="main-content">
+                <div class="compass-section">
+                    <div class="compass-container">
+                        <div class="compass-title">
+                            <h3>Problem-Solving Intelligence Map</h3>
+                            <p>Speed vs. Resilience Under Pressure</p>
+                        </div>
+
+                        <svg id="compass-svg" class="compass-svg" viewBox="0 0 600 600">
+                            <!-- Quadrant backgrounds -->
+                            <rect x="300" y="0" width="300" height="300" fill="#10b981" opacity="0.15" />
+                            <rect x="0" y="0" width="300" height="300" fill="#3b82f6" opacity="0.15" />
+                            <rect x="0" y="300" width="300" height="300" fill="#ef4444" opacity="0.15" />
+                            <rect x="300" y="300" width="300" height="300" fill="#f59e0b" opacity="0.15" />
+
+                            <!-- Quadrant labels -->
+                            <text x="150" y="30" text-anchor="middle" fill="#1e40af" font-size="16" font-weight="bold">
+                                METHODICAL GENIUS
+                            </text>
+                            <text x="150" y="50" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="600">
+                                Slow + Resilient • High Intelligence
+                            </text>
+
+                            <text x="450" y="30" text-anchor="middle" fill="#047857" font-size="16" font-weight="bold">
+                                PRESSURE PERFORMER
+                            </text>
+                            <text x="450" y="50" text-anchor="middle" fill="#047857" font-size="12" font-weight="600">
+                                Fast + Resilient • Highest Intelligence
+                            </text>
+
+                            <text x="150" y="580" text-anchor="middle" fill="#dc2626" font-size="16" font-weight="bold">
+                                OVERWHELMED
+                            </text>
+                            <text x="150" y="560" text-anchor="middle" fill="#dc2626" font-size="12" font-weight="600">
+                                Slow + Fragile • Low Intelligence
+                            </text>
+
+                            <text x="450" y="580" text-anchor="middle" fill="#d97706" font-size="16" font-weight="bold">
+                                QUICK BURNOUT
+                            </text>
+                            <text x="450" y="560" text-anchor="middle" fill="#d97706" font-size="12" font-weight="600">
+                                Fast + Fragile • Medium Intelligence
+                            </text>
+
+                            <!-- Main axes -->
+                            <line x1="300" y1="0" x2="300" y2="600" stroke="#1f2937" stroke-width="3" />
+                            <line x1="0" y1="300" x2="600" y2="300" stroke="#1f2937" stroke-width="3" />
+
+                            <!-- Axis labels -->
+                            <text x="580" y="310" text-anchor="middle" fill="#374151" font-size="18" font-weight="bold">
+                                SPEED →
+                            </text>
+                            <text x="290" y="25" text-anchor="middle" fill="#374151" font-size="18" font-weight="bold"
+                                transform="rotate(-90 290 25)">
+                                ← RESILIENCE
+                            </text>
+
+                            <!-- Score indicators -->
+                            <text x="30" y="310" text-anchor="middle" fill="#6b7280" font-size="14"
+                                font-weight="600">0</text>
+                            <text x="570" y="310" text-anchor="middle" fill="#6b7280" font-size="14"
+                                font-weight="600">100</text>
+                            <text x="290" y="590" text-anchor="middle" fill="#6b7280" font-size="14"
+                                font-weight="600">0</text>
+                            <text x="290" y="25" text-anchor="middle" fill="#6b7280" font-size="14"
+                                font-weight="600">100</text>
+
+                            <!-- User point -->
+                            <circle id="user-dot" cx="300" cy="300" r="12" fill="#dc2626" stroke="white"
+                                stroke-width="4" class="user-dot" />
+                            <text id="user-label" x="300" y="280" text-anchor="middle" fill="#1f2937" font-size="14"
+                                font-weight="bold">YOU</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="sidebar">
+                    <!-- Overall Score -->
+                    <div class="card">
+                        <div class="card-content overall-score">
+                            <h3><span class="emoji">🧠</span>Intelligence Score</h3>
+                            <div id="overall-score" class="score-badge">50/100</div>
+                            <div id="intelligence-level" class="intelligence-level">Average Problem Solver</div>
+                            <div id="percentile" class="percentile">50th percentile</div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Scores -->
+                    <div class="card">
+                        <div class="card-content">
+                            <h3><span class="emoji">📊</span>Intelligence Breakdown</h3>
+
+                            <div class="dimension">
+                                <div class="dimension-header">
+                                    <span class="dimension-label">⚡ Processing Speed</span>
+                                    <span id="speed-score" class="dimension-score">50/100</span>
+                                </div>
+                                <div class="dimension-bar">
+                                    <div id="speed-fill" class="dimension-fill speed-fill" style="width: 50%"></div>
+                                </div>
+                                <div class="dimension-desc">How quickly you analyze and respond</div>
+                            </div>
+
+                            <div class="dimension">
+                                <div class="dimension-header">
+                                    <span class="dimension-label">🎯 Accuracy Rate</span>
+                                    <span id="accuracy-score" class="dimension-score">50/100</span>
+                                </div>
+                                <div class="dimension-bar">
+                                    <div id="accuracy-fill" class="dimension-fill accuracy-fill" style="width: 50%">
+                                    </div>
+                                </div>
+                                <div class="dimension-desc">How often you find correct solutions</div>
+                            </div>
+
+                            <div class="dimension">
+                                <div class="dimension-header">
+                                    <span class="dimension-label">🛡️ Pressure Resilience</span>
+                                    <span id="resilience-score" class="dimension-score">50/100</span>
+                                </div>
+                                <div class="dimension-bar">
+                                    <div id="resilience-fill" class="dimension-fill resilience-fill" style="width: 50%">
+                                    </div>
+                                </div>
+                                <div class="dimension-desc">How well you perform under stress</div>
+                            </div>
+
+                            <div class="dimension">
+                                <div class="dimension-header">
+                                    <span class="dimension-label">🔄 Adaptability</span>
+                                    <span id="adaptability-score" class="dimension-score">50/100</span>
+                                </div>
+                                <div class="dimension-bar">
+                                    <div id="adaptability-fill" class="dimension-fill adaptability-fill"
+                                        style="width: 50%"></div>
+                                </div>
+                                <div class="dimension-desc">How quickly you pivot when stuck</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intelligence Profile -->
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 id="profile-title"><span class="emoji">🎭</span>The Balanced Thinker</h3>
+                            <div id="profile-description" class="profile-description">
+                                You demonstrate average problem-solving capabilities across most scenarios.
+                            </div>
+                            <div class="strengths-title">Key Strengths:</div>
+                            <div id="strengths-list">
+                                <div class="strength-item">
+                                    <div class="strength-dot"></div>
+                                    <span class="strength-text">Maintains steady performance</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h4><span class="emoji">💡</span>About This Assessment</h4>
+                        <p>
+                            This assessment measures practical intelligence: your ability to solve real problems under
+                            pressure.
+                            It evaluates speed, accuracy, resilience, and adaptability in high-stakes scenarios.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // High-pressure, problem-solving focused questions
+        const questions = [
+            {
+                text: "Your server crashes during a live client presentation to 100+ people. The client is getting frustrated and you have 2 minutes to fix it or lose the deal. You:",
+                answers: [
+                    { text: "Immediately restart the server and have a backup plan ready", speed: 25, accuracy: 20, resilience: 25, adaptability: 20 },
+                    { text: "Calmly explain the situation while quickly troubleshooting", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Panic and frantically try random solutions", speed: 10, accuracy: 5, resilience: 5, adaptability: 10 },
+                    { text: "Freeze up and apologize profusely", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                ]
+            },
+            {
+                text: "You have 30 minutes to solve a complex math problem that determines if your team gets funding. Halfway through, you realize your approach is wrong. You:",
+                answers: [
+                    { text: "Immediately switch to a completely different method", speed: 20, accuracy: 15, resilience: 15, adaptability: 25 },
+                    { text: "Quickly review what went wrong and try a modified approach", speed: 15, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Keep pushing with the same method hoping it works", speed: 10, accuracy: 10, resilience: 10, adaptability: 5 },
+                    { text: "Feel overwhelmed and consider giving up", speed: 5, accuracy: 5, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "Emergency: The building's fire alarm system malfunctioned and you're the only tech on-site with 200 people inside. You need to figure out if it's real or false within 60 seconds. You:",
+                answers: [
+                    { text: "Quickly check the fire panel, smell for smoke, and make a decisive call", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Check multiple indicators methodically and announce your findings", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Evacuate everyone immediately without investigating", speed: 20, accuracy: 10, resilience: 15, adaptability: 10 },
+                    { text: "Feel paralyzed by the responsibility and delay the decision", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                ]
+            },
+            {
+                text: "You're debugging code and have 5 minutes before the deadline. You've tried 3 approaches and nothing works. The bug is costing the company $1000/minute. You:",
+                answers: [
+                    { text: "Try a completely different debugging strategy immediately", speed: 20, accuracy: 15, resilience: 20, adaptability: 25 },
+                    { text: "Systematically check the most likely causes based on error messages", speed: 15, accuracy: 25, resilience: 15, adaptability: 15 },
+                    { text: "Randomly change code hoping something fixes it", speed: 15, accuracy: 5, resilience: 10, adaptability: 15 },
+                    { text: "Accept defeat and tell your boss you can't fix it", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                ]
+            },
+            {
+                text: "During a live surgery, the power goes out. You have battery backup for 10 minutes max. The patient's life depends on you completing the procedure. You:",
+                answers: [
+                    { text: "Immediately assess what's critical and work efficiently with backup power", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
+                    { text: "Quickly prioritize the most essential steps to save the patient", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Call for emergency backup while continuing carefully", speed: 15, accuracy: 20, resilience: 15, adaptability: 15 },
+                    { text: "Feel overwhelmed by the pressure and struggle to focus", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "You're managing air traffic control when 3 planes simultaneously request emergency landing at your airport. You have 2 minutes to sequence them safely. You:",
+                answers: [
+                    { text: "Quickly assess each emergency and prioritize by severity", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Methodically review each situation and create a safe landing sequence", speed: 15, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Go with your gut feeling about which plane needs to land first", speed: 20, accuracy: 15, resilience: 15, adaptability: 15 },
+                    { text: "Feel overwhelmed and struggle to make quick decisions", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "The stock market is crashing and you need to decide whether to sell your company's $10M position in the next 60 seconds. You:",
+                answers: [
+                    { text: "Quickly analyze the pattern and make a decisive trade", speed: 25, accuracy: 20, resilience: 25, adaptability: 20 },
+                    { text: "Check key indicators rapidly and execute based on data", speed: 20, accuracy: 25, resilience: 20, adaptability: 15 },
+                    { text: "Follow your predetermined stop-loss strategy", speed: 15, accuracy: 15, resilience: 15, adaptability: 10 },
+                    { text: "Freeze up and do nothing, hoping it recovers", speed: 5, accuracy: 5, resilience: 5, adaptability: 5 }
+                ]
+            },
+            {
+                text: "You're a pilot and both engines fail at 30,000 feet. You have minutes to find a solution before running out of altitude. You:",
+                answers: [
+                    { text: "Immediately run through emergency procedures while looking for landing options", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
+                    { text: "Systematically work through the checklist while staying calm", speed: 15, accuracy: 25, resilience: 25, adaptability: 15 },
+                    { text: "Try to restart engines while scanning for emergency landing sites", speed: 20, accuracy: 20, resilience: 20, adaptability: 20 },
+                    { text: "Feel panic setting in and struggle to think clearly", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "You're leading a rescue mission and your GPS fails in unfamiliar terrain. The victim has 30 minutes of oxygen left. You:",
+                answers: [
+                    { text: "Immediately use backup navigation methods and natural landmarks", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
+                    { text: "Quickly orient using sun position and terrain features", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Try to fix the GPS while moving toward the general area", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
+                    { text: "Feel lost and consider calling for backup navigation help", speed: 10, accuracy: 10, resilience: 10, adaptability: 10 }
+                ]
+            },
+            {
+                text: "During a live TV broadcast, your teleprompter breaks and you have 30 seconds of dead air. 2 million people are watching. You:",
+                answers: [
+                    { text: "Immediately improvise and continue the broadcast smoothly", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
+                    { text: "Quickly transition to discussing a related topic you know well", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Acknowledge the technical difficulty and try to continue", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
+                    { text: "Freeze up and struggle to fill the dead air", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "You're performing surgery and discover an unexpected complication that wasn't in the scans. You need to decide on a new approach immediately. You:",
+                answers: [
+                    { text: "Quickly assess options and adapt the surgical plan", speed: 20, accuracy: 25, resilience: 25, adaptability: 25 },
+                    { text: "Systematically evaluate the complication and choose the safest approach", speed: 15, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Proceed cautiously while considering alternatives", speed: 10, accuracy: 20, resilience: 15, adaptability: 15 },
+                    { text: "Feel uncertain and consider stopping the procedure", speed: 5, accuracy: 10, resilience: 10, adaptability: 10 }
+                ]
+            },
+            {
+                text: "Your company's main database is corrupted and customers can't access their accounts. Every minute costs $5000. You have no recent backup. You:",
+                answers: [
+                    { text: "Immediately start multiple recovery approaches simultaneously", speed: 25, accuracy: 20, resilience: 25, adaptability: 25 },
+                    { text: "Quickly identify the corruption type and use the most appropriate recovery method", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Try the most common recovery solutions first", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
+                    { text: "Feel overwhelmed by the pressure and struggle to start", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "You're defusing a bomb and with 60 seconds left, you realize the wiring doesn't match the manual. You:",
+                answers: [
+                    { text: "Immediately trace the actual wiring pattern and adapt", speed: 25, accuracy: 25, resilience: 25, adaptability: 25 },
+                    { text: "Quickly analyze the differences and apply logical deduction", speed: 20, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Follow the pattern that seems most similar to the manual", speed: 15, accuracy: 15, resilience: 15, adaptability: 15 },
+                    { text: "Feel panic and struggle to think clearly about the differences", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "During a rocket launch, multiple systems show warning lights simultaneously. You have 10 seconds to decide: abort or continue. You:",
+                answers: [
+                    { text: "Instantly prioritize warnings by criticality and make the call", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Quickly assess which systems are most critical to mission safety", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Go with your gut feeling based on experience", speed: 20, accuracy: 15, resilience: 20, adaptability: 15 },
+                    { text: "Feel paralyzed by the complexity and delay the decision", speed: 5, accuracy: 10, resilience: 5, adaptability: 10 }
+                ]
+            },
+            {
+                text: "You're a day trader and just lost $50K on a bad trade. The market is still moving against you. You have 30 seconds to decide your next move. You:",
+                answers: [
+                    { text: "Cut losses immediately and reassess with a clear head", speed: 25, accuracy: 25, resilience: 25, adaptability: 20 },
+                    { text: "Quickly analyze if this is a temporary dip or real trend change", speed: 20, accuracy: 25, resilience: 20, adaptability: 20 },
+                    { text: "Double down hoping to recover the losses quickly", speed: 20, accuracy: 5, resilience: 10, adaptability: 10 },
+                    { text: "Feel emotionally overwhelmed and make no decision", speed: 5, accuracy: 10, resilience: 5, adaptability: 5 }
+                ]
+            }
+        ];
+
+        // State management
+        let currentQuestion = 0;
+        let scores = { speed: 0, accuracy: 0, resilience: 0, adaptability: 0 };
+        let userPosition = { x: 0, y: 0 };
+        let isDragging = false;
+        let questionHistory = [];
+
+        // DOM elements
+        const compassView = document.getElementById('compass-view');
+        const quizView = document.getElementById('quiz-view');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const backBtn = document.getElementById('back-btn');
+        const skipBtn = document.getElementById('skip-btn');
+        const userDot = document.getElementById('user-dot');
+        const compassSvg = document.getElementById('compass-svg');
+
+        // Initialize app
+        function init() {
+            updateDisplay();
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            startQuizBtn.addEventListener('click', startQuiz);
+            backBtn.addEventListener('click', previousQuestion);
+            skipBtn.addEventListener('click', nextQuestion);
+
+            // Compass dragging
+            userDot.addEventListener('mousedown', startDragging);
+            compassSvg.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDragging);
+
+            // Touch events for mobile
+            userDot.addEventListener('touchstart', startDragging);
+            compassSvg.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', stopDragging);
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            scores = { speed: 0, accuracy: 0, resilience: 0, adaptability: 0 };
+            questionHistory = [];
+            compassView.style.display = 'none';
+            quizView.style.display = 'block';
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('total-q').textContent = questions.length;
+            document.getElementById('question-text').textContent = question.text;
+
+            const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = progressPercent + '%';
+
+            const answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.innerHTML = `
+                    <div class="radio"></div>
+                    <div class="text">${answer.text}</div>
+                `;
+                button.addEventListener('click', () => selectAnswer(answer));
+                answersContainer.appendChild(button);
+            });
+
+            // Update navigation buttons
+            backBtn.disabled = currentQuestion === 0;
+        }
+
+        function selectAnswer(answer) {
+            // Store current state in history
+            questionHistory.push({
+                question: currentQuestion,
+                scores: { ...scores }
+            });
+
+            // Update scores
+            Object.keys(answer).forEach(key => {
+                if (key !== 'text' && scores.hasOwnProperty(key)) {
+                    scores[key] += answer[key] || 0;
+                }
+            });
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0 && questionHistory.length > 0) {
+                currentQuestion--;
+                const previousState = questionHistory.pop();
+                scores = previousState.scores;
+                displayQuestion();
+            }
+        }
+
+        function finishQuiz() {
+            // Calculate final position based on speed and resilience (primary axes)
+            const maxScore = questions.length * 25; // Max score per dimension is 25 per question
+            const speedPercent = Math.max(0, Math.min(100, (scores.speed / maxScore) * 100));
+            const resiliencePercent = Math.max(0, Math.min(100, (scores.resilience / maxScore) * 100));
+
+            // Convert percentages to coordinate system (-100 to 100)
+            const finalX = (speedPercent - 50) * 2;
+            const finalY = (resiliencePercent - 50) * 2;
+
+            userPosition = { x: finalX, y: finalY };
+            updateDisplay();
+
+            quizView.style.display = 'none';
+            compassView.style.display = 'block';
+
+            // Smooth animation to final position
+            animateToPosition(finalX, finalY);
+        }
+
+        function animateToPosition(targetX, targetY) {
+            const centerX = 300;
+            const centerY = 300;
+
+            const startX = parseFloat(userDot.getAttribute('cx'));
+            const startY = parseFloat(userDot.getAttribute('cy'));
+
+            const endX = centerX + (targetX * 2.5);
+            const endY = centerY - (targetY * 2.5);
+
+            let progress = 0;
+            const duration = 2000; // 2 seconds
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                progress = Math.min(elapsed / duration, 1);
+
+                // Easing function for smooth animation
+                const eased = 1 - Math.pow(1 - progress, 3);
+
+                const currentX = startX + (endX - startX) * eased;
+                const currentY = startY + (endY - startY) * eased;
+
+                userDot.setAttribute('cx', currentX);
+                userDot.setAttribute('cy', currentY);
+                document.getElementById('user-label').setAttribute('x', currentX);
+                document.getElementById('user-label').setAttribute('y', currentY - 20);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    // Update all displays after animation completes
+                    updateDisplay();
+                }
+            }
+
+            animate();
+        }
+
+        // Compass interaction functions
+        function startDragging(e) {
+            isDragging = true;
+            e.preventDefault();
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+
+            e.preventDefault();
+            const rect = compassSvg.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            let clientX, clientY;
+            if (e.type.includes('touch')) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            const x = ((clientX - rect.left - centerX) / centerX) * 100;
+            const y = ((centerY - (clientY - rect.top)) / centerY) * 100;
+
+            const clampedX = Math.max(-100, Math.min(100, x));
+            const clampedY = Math.max(-100, Math.min(100, y));
+
+            userPosition = { x: clampedX, y: clampedY };
+            updateUserDotPosition();
+            updateScoreDisplays();
+        }
+
+        function stopDragging() {
+            isDragging = false;
+        }
+
+        function updateUserDotPosition() {
+            const svgX = 300 + (userPosition.x * 2.5);
+            const svgY = 300 - (userPosition.y * 2.5);
+
+            userDot.setAttribute('cx', svgX);
+            userDot.setAttribute('cy', svgY);
+            document.getElementById('user-label').setAttribute('x', svgX);
+            document.getElementById('user-label').setAttribute('y', svgY - 20);
+        }
+
+        function updateDisplay() {
+            updateUserDotPosition();
+            updateScoreDisplays();
+        }
+
+        function updateScoreDisplays() {
+            const { x, y } = userPosition;
+
+            // Convert position to scores (0-100 scale)
+            const speedScore = Math.round(Math.max(0, Math.min(100, (x + 100) / 2)));
+            const resilienceScore = Math.round(Math.max(0, Math.min(100, (y + 100) / 2)));
+
+            // If we have quiz scores, use those; otherwise use position
+            let finalScores;
+            if (scores.speed > 0 || scores.accuracy > 0 || scores.resilience > 0 || scores.adaptability > 0) {
+                const maxScore = questions.length * 25;
+                finalScores = {
+                    speed: Math.round((scores.speed / maxScore) * 100),
+                    accuracy: Math.round((scores.accuracy / maxScore) * 100),
+                    resilience: Math.round((scores.resilience / maxScore) * 100),
+                    adaptability: Math.round((scores.adaptability / maxScore) * 100)
+                };
+            } else {
+                finalScores = {
+                    speed: speedScore,
+                    accuracy: Math.round((speedScore + resilienceScore) / 2),
+                    resilience: resilienceScore,
+                    adaptability: Math.round((Math.abs(x) + Math.abs(y)) / 2)
+                };
+            }
+
+            // Calculate overall intelligence score
+            const overallScore = Math.round((finalScores.speed + finalScores.accuracy + finalScores.resilience + finalScores.adaptability) / 4);
+
+            // Update score displays
+            document.getElementById('speed-score').textContent = `${finalScores.speed}/100`;
+            document.getElementById('accuracy-score').textContent = `${finalScores.accuracy}/100`;
+            document.getElementById('resilience-score').textContent = `${finalScores.resilience}/100`;
+            document.getElementById('adaptability-score').textContent = `${finalScores.adaptability}/100`;
+            document.getElementById('overall-score').textContent = `${overallScore}/100`;
+
+            // Update progress bars
+            document.getElementById('speed-fill').style.width = `${finalScores.speed}%`;
+            document.getElementById('accuracy-fill').style.width = `${finalScores.accuracy}%`;
+            document.getElementById('resilience-fill').style.width = `${finalScores.resilience}%`;
+            document.getElementById('adaptability-fill').style.width = `${finalScores.adaptability}%`;
+
+            // Update intelligence level and percentile
+            const { level, percentile, profile } = getIntelligenceProfile(overallScore, finalScores);
+            document.getElementById('intelligence-level').textContent = level;
+            document.getElementById('percentile').textContent = percentile;
+            document.getElementById('profile-title').innerHTML = `<span class="emoji">${profile.emoji}</span>${profile.title}`;
+            document.getElementById('profile-description').textContent = profile.description;
+
+            // Update strengths list
+            const strengthsList = document.getElementById('strengths-list');
+            strengthsList.innerHTML = '';
+
+            profile.strengths.forEach(strength => {
+                const strengthElement = document.createElement('div');
+                strengthElement.className = 'strength-item';
+                strengthElement.innerHTML = `
+                    <div class="strength-dot"></div>
+                    <span class="strength-text">${strength}</span>
+                `;
+                strengthsList.appendChild(strengthElement);
+            });
+        }
+
+        function getIntelligenceProfile(overallScore, scores) {
+            let level, percentile, profile;
+
+            if (overallScore >= 90) {
+                level = "Exceptional Problem Solver";
+                percentile = "Top 1%";
+                profile = {
+                    emoji: "🧠",
+                    title: "Genius-Level Intelligence",
+                    description: "You demonstrate exceptional problem-solving abilities across all high-pressure scenarios. Your combination of speed, accuracy, resilience, and adaptability places you among the most capable minds.",
+                    strengths: [
+                        "Performs optimally under extreme pressure",
+                        "Makes accurate decisions at lightning speed",
+                        "Adapts instantly when situations change",
+                        "Maintains composure in life-or-death scenarios",
+                        "Consistently finds solutions others miss"
+                    ]
+                };
+            } else if (overallScore >= 80) {
+                level = "Highly Intelligent";
+                percentile = "Top 5%";
+                profile = {
+                    emoji: "🚀",
+                    title: "Superior Problem Solver",
+                    description: "You show strong problem-solving capabilities with excellent performance under pressure. You handle complex situations with confidence and skill.",
+                    strengths: [
+                        "Excellent performance in crisis situations",
+                        "Strong analytical thinking under pressure",
+                        "Good balance of speed and accuracy",
+                        "Adapts well to unexpected challenges",
+                        "Reliable decision-making in emergencies"
+                    ]
+                };
+            } else if (overallScore >= 70) {
+                level = "Above Average Intelligence";
+                percentile = "Top 15%";
+                profile = {
+                    emoji: "⚡",
+                    title: "Capable Problem Solver",
+                    description: "You demonstrate solid problem-solving skills with good performance under pressure. You handle most challenging situations effectively.",
+                    strengths: [
+                        "Good performance in stressful situations",
+                        "Solid analytical and decision-making skills",
+                        "Maintains focus under moderate pressure",
+                        "Can adapt when needed",
+                        "Generally reliable in problem-solving"
+                    ]
+                };
+            } else if (overallScore >= 60) {
+                level = "Average Intelligence";
+                percentile = "50th percentile";
+                profile = {
+                    emoji: "🎯",
+                    title: "Steady Problem Solver",
+                    description: "You show average problem-solving capabilities. While you may struggle under intense pressure, you can handle routine challenges adequately.",
+                    strengths: [
+                        "Handles routine problems well",
+                        "Works methodically when time allows",
+                        "Can solve problems with adequate time",
+                        "Learns from experience",
+                        "Stable performance in low-pressure situations"
+                    ]
+                };
+            } else if (overallScore >= 40) {
+                level = "Below Average Intelligence";
+                percentile = "Bottom 25%";
+                profile = {
+                    emoji: "🐌",
+                    title: "Developing Problem Solver",
+                    description: "You face challenges with problem-solving, especially under pressure. Focus on building confidence and practicing systematic approaches to improve.",
+                    strengths: [
+                        "Can solve simple problems given time",
+                        "Benefits from structured approaches",
+                        "May excel in specific familiar areas",
+                        "Room for significant improvement",
+                        "Can develop skills with practice"
+                    ]
+                };
+            } else {
+                level = "Needs Development";
+                percentile = "Bottom 10%";
+                profile = {
+                    emoji: "🆘",
+                    title: "Struggles with Problem Solving",
+                    description: "Problem-solving under pressure is very challenging for you. Consider working with mentors or taking courses to develop these critical skills.",
+                    strengths: [
+                        "Recognizes the need for improvement",
+                        "May perform better with support",
+                        "Can benefit from structured training",
+                        "Has potential for growth",
+                        "Should seek guidance and practice"
+                    ]
+                };
+            }
+
+            return { level, percentile, profile };
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>
