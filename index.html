@@ -744,189 +744,189 @@
     </div>
 
     <script>
-        // Enhanced scoring system with negative values and wider ranges
-        const questions = [
-            {
-                text: "You need to choose a vendor for a $500K project. You have 2 hours before the deadline. You:",
-                answers: [
-                    { text: "Go with the vendor I've worked with before - I know they're reliable", speed: 40, accuracy: -10, resilience: 20, adaptability: -20 },
-                    { text: "Quickly compare the top 3 proposals on price and timeline", speed: 35, accuracy: -15, resilience: 10, adaptability: 5 },
-                    { text: "Spend time calling references for the most promising vendor", speed: -30, accuracy: 45, resilience: 30, adaptability: 15 },
-                    { text: "Ask for a 24-hour extension to properly evaluate all options", speed: -40, accuracy: 35, resilience: 5, adaptability: 25 }
-                ]
-            },
-            {
-                text: "Your team is debating two approaches to solve a critical bug. The meeting is running long. You:",
-                answers: [
-                    { text: "Call for a quick vote to decide and move forward", speed: 45, accuracy: -25, resilience: 10, adaptability: -15 },
-                    { text: "Suggest we try the simpler approach first since it's faster to implement", speed: 30, accuracy: 0, resilience: 15, adaptability: 10 },
-                    { text: "Insist we take time to properly analyze both approaches first", speed: -35, accuracy: 40, resilience: 25, adaptability: 0 },
-                    { text: "Propose splitting into two groups to prototype both solutions", speed: 0, accuracy: 25, resilience: 35, adaptability: 45 }
-                ]
-            },
-            {
-                text: "A client wants an answer to their pricing question immediately, but you need to check with legal first. You:",
-                answers: [
-                    { text: "Give them a ballpark estimate based on similar projects", speed: 45, accuracy: -30, resilience: 5, adaptability: 0 },
-                    { text: "Tell them I'll have an answer within the hour after checking internally", speed: -5, accuracy: 40, resilience: 25, adaptability: 15 },
-                    { text: "Explain that pricing is complex and schedule a call for tomorrow", speed: -25, accuracy: 30, resilience: 15, adaptability: 0 },
-                    { text: "Quickly conference in someone from legal to answer on the spot", speed: 25, accuracy: 20, resilience: 30, adaptability: 40 }
-                ]
-            },
-            {
-                text: "You discover a potential security vulnerability in your code 30 minutes before launch. You:",
-                answers: [
-                    { text: "Deploy as planned - it's probably not a real threat", speed: 45, accuracy: -45, resilience: -20, adaptability: -25 },
-                    { text: "Do a quick patch for the most obvious issue and deploy", speed: 35, accuracy: -15, resilience: 10, adaptability: 5 },
-                    { text: "Delay the launch until tomorrow to properly investigate and fix", speed: -40, accuracy: 45, resilience: 40, adaptability: 25 },
-                    { text: "Deploy with monitoring in place and fix immediately if issues arise", speed: 20, accuracy: 0, resilience: 25, adaptability: 35 }
-                ]
-            },
-            {
-                text: "Your presentation to executives is in 10 minutes and you notice an error in your key financial projection. You:",
-                answers: [
-                    { text: "Present as-is and hope no one notices the error", speed: 40, accuracy: -50, resilience: -25, adaptability: -30 },
-                    { text: "Quickly recalculate and update just that one slide", speed: 25, accuracy: 5, resilience: 20, adaptability: 10 },
-                    { text: "Remove the slide entirely and adjust my presentation", speed: 10, accuracy: 15, resilience: 25, adaptability: 35 },
-                    { text: "Start by acknowledging the error and presenting the corrected data", speed: -10, accuracy: 45, resilience: 40, adaptability: 25 }
-                ]
-            },
-            {
-                text: "A journalist wants a quote about your company's new product launch. The PR team is unavailable. You:",
-                answers: [
-                    { text: "Give them a quick statement based on what I know", speed: 40, accuracy: -20, resilience: 0, adaptability: -10 },
-                    { text: "Tell them I'll need to get back to them with an official statement", speed: -10, accuracy: 35, resilience: 20, adaptability: 5 },
-                    { text: "Refer them to our press kit and decline to comment personally", speed: 5, accuracy: 20, resilience: 25, adaptability: -15 },
-                    { text: "Get the PR team on the phone immediately before responding", speed: -5, accuracy: 40, resilience: 30, adaptability: 40 }
-                ]
-            },
-            {
-                text: "You're reviewing a contract with a tight signing deadline, but some terms seem unclear. You:",
-                answers: [
-                    { text: "Sign it - we can clarify the details during implementation", speed: 45, accuracy: -35, resilience: -10, adaptability: -20 },
-                    { text: "Sign with a note requesting clarification on specific terms", speed: 25, accuracy: 0, resilience: 15, adaptability: 15 },
-                    { text: "Call the other party to clarify the unclear terms before signing", speed: -15, accuracy: 40, resilience: 25, adaptability: 25 },
-                    { text: "Request a contract amendment with clearer language", speed: -35, accuracy: 35, resilience: 20, adaptability: 10 }
-                ]
-            },
-            {
-                text: "Your team needs to estimate project time for a proposal due today. The scope is somewhat unclear. You:",
-                answers: [
-                    { text: "Use our standard multiplier from similar projects", speed: 40, accuracy: 0, resilience: 15, adaptability: -15 },
-                    { text: "Add 20% buffer to my best guess and submit", speed: 35, accuracy: -10, resilience: 10, adaptability: 5 },
-                    { text: "Call the client to clarify scope before estimating", speed: -25, accuracy: 45, resilience: 25, adaptability: 35 },
-                    { text: "Submit a range estimate with assumptions clearly stated", speed: 5, accuracy: 35, resilience: 25, adaptability: 25 }
-                ]
-            },
-            {
-                text: "You're asked to recommend hiring someone, but you only had a brief interaction with them. You:",
-                answers: [
-                    { text: "Give my impression based on our limited interaction", speed: 35, accuracy: -25, resilience: 0, adaptability: -15 },
-                    { text: "Recommend a more thorough evaluation process instead", speed: -25, accuracy: 45, resilience: 30, adaptability: 25 },
-                    { text: "Decline to give a recommendation due to limited data", speed: 0, accuracy: 25, resilience: 25, adaptability: 0 },
-                    { text: "Suggest involving others who know them better", speed: -5, accuracy: 35, resilience: 20, adaptability: 40 }
-                ]
-            },
-            {
-                text: "A customer is demanding a refund for a product you're not sure they actually purchased. You:",
-                answers: [
-                    { text: "Give the refund to avoid escalation", speed: 40, accuracy: -25, resilience: -15, adaptability: 5 },
-                    { text: "Look up their purchase history before deciding", speed: -15, accuracy: 45, resilience: 25, adaptability: 15 },
-                    { text: "Ask them to provide proof of purchase", speed: 15, accuracy: 25, resilience: 20, adaptability: 5 },
-                    { text: "Escalate to a manager to make the call", speed: 5, accuracy: 15, resilience: 10, adaptability: 25 }
-                ]
-            },
-            {
-                text: "You need to fire someone but HR says the documentation isn't sufficient yet. Your team is suffering. You:",
-                answers: [
-                    { text: "Fire them anyway - sometimes you have to act decisively", speed: 45, accuracy: -35, resilience: 5, adaptability: -25 },
-                    { text: "Work with HR to fast-track the documentation process", speed: 10, accuracy: 25, resilience: 35, adaptability: 40 },
-                    { text: "Wait for proper documentation while managing team morale", speed: -25, accuracy: 40, resilience: 25, adaptability: 5 },
-                    { text: "Move the person to a different role temporarily", speed: 0, accuracy: 10, resilience: 20, adaptability: 35 }
-                ]
-            },
-            {
-                text: "A potential investor wants your financial projections, but they're based on optimistic assumptions. You:",
-                answers: [
-                    { text: "Send them as-is - investors expect optimistic projections", speed: 40, accuracy: -30, resilience: -10, adaptability: -20 },
-                    { text: "Include a note explaining the assumptions behind the numbers", speed: 5, accuracy: 40, resilience: 30, adaptability: 25 },
-                    { text: "Create conservative and optimistic scenarios", speed: -25, accuracy: 35, resilience: 25, adaptability: 40 },
-                    { text: "Schedule a call to discuss the projections in context", speed: -15, accuracy: 25, resilience: 20, adaptability: 35 }
-                ]
-            },
-            {
-                text: "Your automated system flagged a transaction as potentially fraudulent, but the customer is insisting it's legitimate. You:",
-                answers: [
-                    { text: "Override the system and approve the transaction", speed: 40, accuracy: -35, resilience: -10, adaptability: 0 },
-                    { text: "Ask for additional verification before processing", speed: -10, accuracy: 40, resilience: 25, adaptability: 15 },
-                    { text: "Escalate to the fraud prevention team", speed: 0, accuracy: 30, resilience: 20, adaptability: 25 },
-                    { text: "Temporarily hold the transaction while investigating", speed: -20, accuracy: 25, resilience: 30, adaptability: 20 }
-                ]
-            },
-            {
-                text: "You're offered two job opportunities: one with a known company (good but not great), another with an exciting startup (higher risk/reward). Decision needed today. You:",
-                answers: [
-                    { text: "Take the safe option with the established company", speed: 25, accuracy: 0, resilience: -15, adaptability: -25 },
-                    { text: "Go with the startup - fortune favors the bold", speed: 40, accuracy: -15, resilience: 15, adaptability: 30 },
-                    { text: "Ask both for a few more days to decide", speed: -30, accuracy: 25, resilience: 10, adaptability: 15 },
-                    { text: "Negotiate with both to improve the offers before deciding", speed: -5, accuracy: 20, resilience: 35, adaptability: 45 }
-                ]
-            },
-            {
-                text: "Your algorithm is producing biased results, but fixing it properly would delay your product launch by 3 months. You:",
-                answers: [
-                    { text: "Launch as planned and fix the bias in the next version", speed: 45, accuracy: -40, resilience: -20, adaptability: 0 },
-                    { text: "Implement a quick bias correction and launch on time", speed: 30, accuracy: -10, resilience: 10, adaptability: 15 },
-                    { text: "Delay launch to properly address the bias issue", speed: -40, accuracy: 45, resilience: 40, adaptability: 25 },
-                    { text: "Launch with clear disclaimers about current limitations", speed: 15, accuracy: 5, resilience: 25, adaptability: 35 }
-                ]
-            },
-            {
-                text: "You're leading a critical project and discover your initial timeline was overly optimistic. Stakeholders expect delivery next week. You:",
-                answers: [
-                    { text: "Push the team to work overtime and deliver on schedule", speed: 40, accuracy: -20, resilience: 0, adaptability: -15 },
-                    { text: "Deliver a minimal viable version and iterate later", speed: 25, accuracy: -5, resilience: 15, adaptability: 25 },
-                    { text: "Immediately inform stakeholders and negotiate a realistic timeline", speed: -10, accuracy: 40, resilience: 35, adaptability: 30 },
-                    { text: "Quietly extend the timeline without formally announcing it", speed: 15, accuracy: -25, resilience: -10, adaptability: -20 }
-                ]
-            },
-            {
-                text: "During a live demo, your software crashes in front of 50 potential clients. You:",
-                answers: [
-                    { text: "Quickly restart and continue like nothing happened", speed: 40, accuracy: -15, resilience: 15, adaptability: 0 },
-                    { text: "Acknowledge the issue and smoothly transition to backup slides", speed: 20, accuracy: 25, resilience: 35, adaptability: 40 },
-                    { text: "Make a joke about technology and try the demo again", speed: 35, accuracy: -10, resilience: 20, adaptability: 25 },
-                    { text: "Apologize and suggest rescheduling the demo", speed: -15, accuracy: 10, resilience: -20, adaptability: -25 }
-                ]
-            },
-            {
-                text: "You receive conflicting feedback from two senior executives about the direction of your project. You:",
-                answers: [
-                    { text: "Go with the feedback from the higher-ranking executive", speed: 30, accuracy: -15, resilience: 0, adaptability: -10 },
-                    { text: "Try to find a compromise solution that addresses both concerns", speed: -10, accuracy: 25, resilience: 30, adaptability: 40 },
-                    { text: "Schedule a meeting with both executives to resolve the conflict", speed: -20, accuracy: 35, resilience: 25, adaptability: 30 },
-                    { text: "Continue with your original plan and see which executive complains", speed: 25, accuracy: -30, resilience: -15, adaptability: -25 }
-                ]
-            },
-            {
-                text: "You discover your competitor just launched a feature identical to what you've been developing for 6 months. You:",
-                answers: [
-                    { text: "Rush to launch our version immediately to stay competitive", speed: 45, accuracy: -25, resilience: 10, adaptability: 5 },
-                    { text: "Pivot to develop a superior version that differentiates us", speed: -15, accuracy: 20, resilience: 25, adaptability: 45 },
-                    { text: "Analyze their implementation to improve our approach", speed: -25, accuracy: 35, resilience: 20, adaptability: 25 },
-                    { text: "Cancel the project and focus resources elsewhere", speed: 20, accuracy: -20, resilience: -25, adaptability: 15 }
-                ]
-            },
-            {
-                text: "A team member consistently misses deadlines but produces high-quality work when they do deliver. You:",
-                answers: [
-                    { text: "Give them an ultimatum to meet deadlines or face consequences", speed: 35, accuracy: -10, resilience: 10, adaptability: -15 },
-                    { text: "Assign them to projects with more flexible timelines", speed: 10, accuracy: 20, resilience: 20, adaptability: 35 },
-                    { text: "Work with them to understand and address the underlying issues", speed: -20, accuracy: 35, resilience: 30, adaptability: 40 },
-                    { text: "Start transitioning their work to more reliable team members", speed: 15, accuracy: 5, resilience: 15, adaptability: 10 }
-                ]
-            }
-        ];
+        // Enhanced questions with more extreme scoring to capture true failure modes
+    const questions = [
+        {
+            text: "You need to choose a vendor for a $500K project. You have 2 hours before the deadline. You:",
+            answers: [
+                { text: "Go with the vendor I've worked with before - I know they're reliable", speed: 40, accuracy: -10, resilience: 20, adaptability: -20 },
+                { text: "Quickly compare the top 3 proposals on price and timeline", speed: 35, accuracy: -15, resilience: 10, adaptability: 5 },
+                { text: "Spend time calling references for the most promising vendor", speed: -30, accuracy: 45, resilience: 30, adaptability: 15 },
+                { text: "Ask for a 24-hour extension to properly evaluate all options", speed: -40, accuracy: 35, resilience: 5, adaptability: 25 }
+            ]
+        },
+        {
+            text: "Your entire team is looking to you for direction during a crisis, but you don't have enough information to make a good decision. You:",
+            answers: [
+                { text: "Make the best decision I can with available info and move forward", speed: 45, accuracy: 10, resilience: 25, adaptability: 20 },
+                { text: "Tell the team I need 30 minutes to gather more information", speed: -20, accuracy: 35, resilience: 30, adaptability: 25 },
+                { text: "Feel overwhelmed and ask someone else to make the call", speed: -30, accuracy: -30, resilience: -40, adaptability: -20 },
+                { text: "Freeze up and hope someone else steps in", speed: -45, accuracy: -50, resilience: -50, adaptability: -45 }
+            ]
+        },
+        {
+            text: "You're 3 hours into debugging a critical system failure. You're exhausted, tried multiple approaches, and nothing works. The pressure is mounting. You:",
+            answers: [
+                { text: "Take a 15-minute break to clear my head, then try a fresh approach", speed: -15, accuracy: 30, resilience: 40, adaptability: 35 },
+                { text: "Keep pushing through - I have to figure this out", speed: 20, accuracy: -20, resilience: -25, adaptability: -30 },
+                { text: "Call in a colleague for fresh eyes and perspective", speed: 10, accuracy: 25, resilience: 25, adaptability: 30 },
+                { text: "Start to panic and randomly try things hoping something works", speed: 25, accuracy: -45, resilience: -50, adaptability: -40 }
+            ]
+        },
+        {
+            text: "You have 5 conflicting high-priority tasks due today and your manager keeps adding more. You:",
+            answers: [
+                { text: "Try to do everything and work all night if necessary", speed: 30, accuracy: -30, resilience: -35, adaptability: -25 },
+                { text: "Prioritize the most critical tasks and negotiate deadlines for others", speed: 15, accuracy: 35, resilience: 35, adaptability: 40 },
+                { text: "Feel completely overwhelmed and don't know where to start", speed: -40, accuracy: -45, resilience: -50, adaptability: -40 },
+                { text: "Quickly do a surface-level job on everything", speed: 45, accuracy: -40, resilience: -20, adaptability: -15 }
+            ]
+        },
+        {
+            text: "During a presentation to the board, you realize halfway through that your data is completely wrong. You:",
+            answers: [
+                { text: "Continue presenting and hope they don't notice", speed: 25, accuracy: -50, resilience: -30, adaptability: -45 },
+                { text: "Stop immediately, acknowledge the error, and offer to reschedule", speed: -20, accuracy: 40, resilience: 45, adaptability: 30 },
+                { text: "Panic and stumble through the rest hoping it gets better", speed: 15, accuracy: -45, resilience: -45, adaptability: -35 },
+                { text: "Try to improvise and present what I remember without slides", speed: 30, accuracy: -25, resilience: 20, adaptability: 35 }
+            ]
+        },
+        {
+            text: "Your biggest client is furious about a service outage and threatening to leave. They want answers NOW. You:",
+            answers: [
+                { text: "Give them a quick explanation even though I don't have all the facts", speed: 40, accuracy: -35, resilience: 10, adaptability: -10 },
+                { text: "Tell them I'll have a full report within 2 hours", speed: -10, accuracy: 30, resilience: 25, adaptability: 20 },
+                { text: "Feel overwhelmed by their anger and transfer them to my manager", speed: -25, accuracy: -20, resilience: -45, adaptability: -30 },
+                { text: "Immediately get the technical team on a call to explain together", speed: 20, accuracy: 25, resilience: 30, adaptability: 40 }
+            ]
+        },
+        {
+            text: "You discover a major security breach that could affect millions of users. Your CEO is in meetings all day. You:",
+            answers: [
+                { text: "Wait for the CEO to be available - this is too big for me to handle", speed: -35, accuracy: -30, resilience: -40, adaptability: -35 },
+                { text: "Immediately activate the incident response protocol", speed: 35, accuracy: 45, resilience: 40, adaptability: 35 },
+                { text: "Feel paralyzed by the magnitude and hope someone else discovers it", speed: -50, accuracy: -50, resilience: -50, adaptability: -50 },
+                { text: "Try to fix it myself quietly before telling anyone", speed: 40, accuracy: -40, resilience: -25, adaptability: -20 }
+            ]
+        },
+        {
+            text: "Three major crises hit your department simultaneously. Your team is looking to you for leadership. You:",
+            answers: [
+                { text: "Delegate each crisis to different team members and coordinate", speed: 25, accuracy: 35, resilience: 40, adaptability: 45 },
+                { text: "Try to personally handle all three at once", speed: 45, accuracy: -35, resilience: -40, adaptability: -30 },
+                { text: "Feel completely overwhelmed and don't know where to start", speed: -45, accuracy: -40, resilience: -50, adaptability: -45 },
+                { text: "Focus intensely on one crisis and ignore the others for now", speed: 35, accuracy: -20, resilience: -25, adaptability: -35 }
+            ]
+        },
+        {
+            text: "You're in charge of a critical launch, but 2 hours before going live, you discover the system will likely crash under load. You:",
+            answers: [
+                { text: "Launch anyway and hope for the best - we can fix issues as they come", speed: 45, accuracy: -50, resilience: -30, adaptability: -25 },
+                { text: "Immediately delay the launch and fix the performance issues", speed: -25, accuracy: 45, resilience: 40, adaptability: 30 },
+                { text: "Panic and don't know what to do - the pressure is too much", speed: -40, accuracy: -45, resilience: -50, adaptability: -40 },
+                { text: "Launch with limited capacity to reduce the risk", speed: 20, accuracy: 15, resilience: 25, adaptability: 35 }
+            ]
+        },
+        {
+            text: "Your manager asks you to fire a team member immediately, but you know it's for illegal reasons. The pressure is intense. You:",
+            answers: [
+                { text: "Do what my manager says - I can't afford to lose my job", speed: 30, accuracy: -45, resilience: -35, adaptability: -40 },
+                { text: "Refuse and escalate to HR, knowing it might hurt my career", speed: -20, accuracy: 45, resilience: 45, adaptability: 25 },
+                { text: "Feel trapped and don't know what to do - this is too much pressure", speed: -35, accuracy: -30, resilience: -45, adaptability: -35 },
+                { text: "Try to find a compromise that satisfies everyone", speed: 15, accuracy: -10, resilience: 10, adaptability: 20 }
+            ]
+        },
+        {
+            text: "During a live demo to 200+ people, everything goes wrong. Multiple systems fail. The audience is getting restless. You:",
+            answers: [
+                { text: "Keep trying to make the demo work while explaining what's happening", speed: 25, accuracy: -25, resilience: 20, adaptability: 15 },
+                { text: "Smoothly transition to talking about the product without the demo", speed: 20, accuracy: 30, resilience: 40, adaptability: 45 },
+                { text: "Freeze up in front of everyone - this is my worst nightmare", speed: -45, accuracy: -40, resilience: -50, adaptability: -45 },
+                { text: "Apologize profusely and suggest ending the session early", speed: -20, accuracy: -30, resilience: -35, adaptability: -25 }
+            ]
+        },
+        {
+            text: "You're managing a project with an impossible deadline. Your team is burning out, but stakeholders keep demanding faster delivery. You:",
+            answers: [
+                { text: "Push the team harder - we have to meet this deadline no matter what", speed: 40, accuracy: -30, resilience: -35, adaptability: -25 },
+                { text: "Have an honest conversation with stakeholders about realistic timelines", speed: -15, accuracy: 40, resilience: 35, adaptability: 30 },
+                { text: "Feel overwhelmed and don't know how to balance these competing pressures", speed: -30, accuracy: -35, resilience: -45, adaptability: -40 },
+                { text: "Cut scope dramatically to meet the timeline", speed: 35, accuracy: 10, resilience: 20, adaptability: 35 }
+            ]
+        },
+        {
+            text: "A critical server is down, customers are complaining, and you're the only one who can fix it. But you've never dealt with this type of failure before. You:",
+            answers: [
+                { text: "Start trying random fixes hoping something works", speed: 35, accuracy: -45, resilience: -25, adaptability: -20 },
+                { text: "Immediately call the vendor support and escalate to priority", speed: 15, accuracy: 30, resilience: 25, adaptability: 35 },
+                { text: "Feel overwhelmed by the responsibility and pressure", speed: -40, accuracy: -35, resilience: -50, adaptability: -35 },
+                { text: "Systematically work through the troubleshooting guide", speed: -20, accuracy: 40, resilience: 35, adaptability: 25 }
+            ]
+        },
+        {
+            text: "Your company's stock is plummeting after bad news. Investors are calling for answers. Media is asking questions. Everyone's looking to you. You:",
+            answers: [
+                { text: "Give quick interviews to control the narrative", speed: 45, accuracy: -25, resilience: 15, adaptability: 10 },
+                { text: "Work with PR to craft a thoughtful response strategy", speed: -10, accuracy: 35, resilience: 30, adaptability: 40 },
+                { text: "Feel completely overwhelmed by the attention and pressure", speed: -40, accuracy: -35, resilience: -50, adaptability: -40 },
+                { text: "Avoid media and let the PR team handle everything", speed: -25, accuracy: -15, resilience: -30, adaptability: -20 }
+            ]
+        },
+        {
+            text: "You realize you've been implementing the wrong solution for 3 months. The real deadline is tomorrow. Your reputation is on the line. You:",
+            answers: [
+                { text: "Work all night to try to build the right solution", speed: 40, accuracy: -35, resilience: -30, adaptability: -20 },
+                { text: "Immediately inform stakeholders and negotiate an extension", speed: -20, accuracy: 40, resilience: 45, adaptability: 35 },
+                { text: "Feel devastated and don't know how to recover from this mistake", speed: -40, accuracy: -40, resilience: -50, adaptability: -45 },
+                { text: "Try to adapt the wrong solution to partially meet requirements", speed: 25, accuracy: -15, resilience: 20, adaptability: 30 }
+            ]
+        },
+        {
+            text: "During a board meeting, you're asked a complex financial question you don't know. Everyone's waiting. You:",
+            answers: [
+                { text: "Make up an answer that sounds reasonable", speed: 40, accuracy: -50, resilience: -20, adaptability: -30 },
+                { text: "Admit I don't know and offer to follow up with detailed analysis", speed: -15, accuracy: 45, resilience: 40, adaptability: 25 },
+                { text: "Feel embarrassed and stumble through a non-answer", speed: -25, accuracy: -35, resilience: -40, adaptability: -30 },
+                { text: "Deflect by talking about related topics I do know", speed: 30, accuracy: -20, resilience: 10, adaptability: 15 }
+            ]
+        },
+        {
+            text: "Your team member makes a mistake that could cost the company $1M. They're panicking and asking what to do. You:",
+            answers: [
+                { text: "Tell them to fix it quietly and not tell anyone", speed: 35, accuracy: -40, resilience: -25, adaptability: -30 },
+                { text: "Immediately escalate to leadership and work on damage control", speed: 15, accuracy: 40, resilience: 35, adaptability: 35 },
+                { text: "Feel overwhelmed and don't know how to handle this situation", speed: -35, accuracy: -30, resilience: -45, adaptability: -40 },
+                { text: "Blame them for the mistake and distance myself from it", speed: 25, accuracy: -45, resilience: -35, adaptability: -35 }
+            ]
+        },
+        {
+            text: "You're leading negotiations for a crucial deal. The other party is being extremely aggressive and making unreasonable demands. You:",
+            answers: [
+                { text: "Give in to their demands to close the deal quickly", speed: 40, accuracy: -30, resilience: -35, adaptability: -20 },
+                { text: "Stand firm on key terms while finding areas of compromise", speed: 10, accuracy: 35, resilience: 40, adaptability: 45 },
+                { text: "Feel intimidated and unsure how to respond to their aggression", speed: -35, accuracy: -25, resilience: -45, adaptability: -30 },
+                { text: "Walk away from the negotiations entirely", speed: 20, accuracy: -20, resilience: -15, adaptability: -25 }
+            ]
+        },
+        {
+            text: "You discover your competitor is about to announce a product that makes yours obsolete. The news breaks in 6 hours. You:",
+            answers: [
+                { text: "Immediately announce our product first, even though it's not ready", speed: 45, accuracy: -40, resilience: -20, adaptability: -15 },
+                { text: "Call an emergency strategy meeting to plan our response", speed: 20, accuracy: 35, resilience: 35, adaptability: 40 },
+                { text: "Feel devastated - all our work has been for nothing", speed: -40, accuracy: -35, resilience: -50, adaptability: -40 },
+                { text: "Do nothing and hope our product still has some market", speed: -30, accuracy: -45, resilience: -40, adaptability: -45 }
+            ]
+        },
+        {
+            text: "Your most important client calls screaming about a bug that's costing them money every minute. You've never seen this bug before. You:",
+            answers: [
+                { text: "Tell them we'll fix it immediately while privately panicking", speed: 35, accuracy: -25, resilience: -30, adaptability: -15 },
+                { text: "Acknowledge the urgency and get the right technical experts involved", speed: 15, accuracy: 35, resilience: 30, adaptability: 40 },
+                { text: "Feel overwhelmed by their anger and the pressure to fix something I don't understand", speed: -35, accuracy: -30, resilience: -50, adaptability: -35 },
+                { text: "Try random fixes hoping to stumble onto the solution", speed: 40, accuracy: -45, resilience: -25, adaptability: -20 }
+            ]
+        }
+    ];
 
         // Shuffle answer order for each question to prevent position bias
         function shuffleAnswers() {
@@ -1177,9 +1177,9 @@
             // If we have quiz scores, use those; otherwise use position
             let finalScores;
             if (scores.speed !== 0 || scores.accuracy !== 0 || scores.resilience !== 0 || scores.adaptability !== 0) {
-                // New scoring system with negative values and wider ranges
+                // Enhanced scoring system with more extreme ranges
                 const maxPossibleScore = questions.length * 45; // Max positive score per dimension
-                const minPossibleScore = questions.length * -50; // Max negative score per dimension
+                const minPossibleScore = questions.length * -50; // Max negative score per dimension (more negative)
                 const scoreRange = maxPossibleScore - minPossibleScore;
 
                 finalScores = {
@@ -1197,9 +1197,9 @@
                 };
             }
 
-            // Calculate overall intelligence score with weighted factors
-            // Accuracy and resilience are weighted higher as they indicate better decision-making
-            const overallScore = Math.round((finalScores.speed * 0.2 + finalScores.accuracy * 0.35 + finalScores.resilience * 0.3 + finalScores.adaptability * 0.15));
+            // Calculate overall intelligence score with enhanced weighting
+            // Accuracy gets highest weight, then resilience, to better identify high performers
+            const overallScore = Math.round((finalScores.speed * 0.15 + finalScores.accuracy * 0.40 + finalScores.resilience * 0.35 + finalScores.adaptability * 0.10));
 
             // Update score displays
             document.getElementById('speed-score').textContent = `${finalScores.speed}/100`;
@@ -1239,7 +1239,8 @@
         function getIntelligenceProfile(overallScore, scores) {
             let level, percentile, profile;
 
-            if (overallScore >= 95) {
+            // Enhanced profiling to better identify failure modes
+            if (overallScore >= 90) {
                 level = "Exceptional Genius";
                 percentile = "Top 0.1%";
                 profile = {
@@ -1254,9 +1255,9 @@
                         "Natural leadership in crisis situations"
                     ]
                 };
-            } else if (overallScore >= 85) {
+            } else if (overallScore >= 80) {
                 level = "Highly Superior Intelligence";
-                percentile = "Top 1%";
+                percentile = "Top 2%";
                 profile = {
                     emoji: "🚀",
                     title: "Elite Problem Solver",
@@ -1269,9 +1270,9 @@
                         "Reliable in critical decision-making"
                     ]
                 };
-            } else if (overallScore >= 75) {
+            } else if (overallScore >= 70) {
                 level = "Above Average Intelligence";
-                percentile = "Top 10%";
+                percentile = "Top 15%";
                 profile = {
                     emoji: "⚡",
                     title: "Capable Decision Maker",
@@ -1284,7 +1285,7 @@
                         "Reliable in routine problem-solving"
                     ]
                 };
-            } else if (overallScore >= 60) {
+            } else if (overallScore >= 55) {
                 level = "Average Intelligence";
                 percentile = "50th percentile";
                 profile = {
@@ -1301,7 +1302,7 @@
                 };
             } else if (overallScore >= 40) {
                 level = "Below Average Intelligence";
-                percentile = "Bottom 25%";
+                percentile = "Bottom 30%";
                 profile = {
                     emoji: "🐌",
                     title: "Developing Decision Maker",
@@ -1315,33 +1316,33 @@
                     ]
                 };
             } else if (overallScore >= 25) {
-                level = "Significantly Below Average";
-                percentile = "Bottom 10%";
+                level = "Significantly Impaired";
+                percentile = "Bottom 15%";
                 profile = {
                     emoji: "🔧",
-                    title: "Needs Significant Development",
-                    description: "Problem-solving under pressure is very challenging. Consider working with mentors, taking courses, or seeking roles with more structured support.",
+                    title: "Struggles Under Pressure",
+                    description: "You consistently struggle with decision-making under pressure and may become overwhelmed in crisis situations. Consider seeking structured support and training.",
                     strengths: [
                         "Recognizes the need for improvement",
-                        "Can perform with significant support",
-                        "May have strengths in other areas",
-                        "Benefits from training and mentorship",
-                        "Room for substantial growth"
+                        "Can perform basic tasks with support",
+                        "May function better in low-pressure environments",
+                        "Benefits from clear procedures and guidance",
+                        "Room for significant development"
                     ]
                 };
             } else {
-                level = "Critical Development Needed";
+                level = "Critical Impairment";
                 percentile = "Bottom 5%";
                 profile = {
                     emoji: "🆘",
-                    title: "Requires Intensive Support - Probably retarded",
-                    description: "Decision-making and problem-solving require significant development. Seek structured training programs and close mentorship to build these critical skills.",
+                    title: "Overwhelmed by Complexity",
+                    description: "You tend to become overwhelmed or make poor decisions when faced with pressure or complexity. This indicates a need for intensive support and structured training in decision-making skills.",
                     strengths: [
                         "Aware of current limitations",
-                        "May excel with heavy structure and support",
-                        "Can improve with dedicated effort",
-                        "Should focus on one skill at a time",
-                        "Benefits from step-by-step guidance"
+                        "May excel in highly structured environments",
+                        "Can improve with intensive support",
+                        "Should focus on building basic skills first",
+                        "Benefits from step-by-step guidance and mentoring"
                     ]
                 };
             }
